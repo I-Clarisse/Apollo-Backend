@@ -1,0 +1,8 @@
+{
+    "PORT":"8000",
+    "DATABASE_USER":"",
+    "DATABASE_PASSWORD":"apollo123",
+    "JWT": "",
+    "email_user":"",
+    "email_password":""
+}
