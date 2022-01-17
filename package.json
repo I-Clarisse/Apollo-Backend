@@ -1,8 +1,9 @@
 {
   "name": "apollo-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "set DEBUG=app:db,app:startup,app:errors,error & nodemon server.js"
@@ -11,12 +12,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
+    "compression": "^1.7.4",
     "config": "^3.3.7",
+    "cors": "^2.8.5",
     "debug": "^4.3.3",
     "dotenv": "^12.0.4",
     "express": "^4.17.2",
+    "helmet": "^5.0.1",
+    "joi": "^17.5.0",
+    "lodash": "^4.17.21",
     "mongoose": "^6.1.6",
+    "mongoose-id-validator": "^0.6.0",
+    "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15"
   }
 }
