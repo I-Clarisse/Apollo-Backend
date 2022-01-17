@@ -16,8 +16,7 @@ export async function validateCommentCreation(req, res, next) {
                 message: "Unable to post comment",
             });
         }
-
-        let checkPost = await Post.findOne({ })
+        return next();
     }
     catch(err) {
         res.status(400).send(err.message);
