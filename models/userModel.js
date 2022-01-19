@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 const config = require('config');
+const { ONE_DAY } = require('../utils/imports');
+const { ObjectId } = mongoose.Schema.Types;
 
 //creating the user schema
 let userSchema = new mongoose.Schema({
