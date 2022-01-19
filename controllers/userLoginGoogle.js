@@ -4,4 +4,22 @@ const app = express();
 
 app.get('/', async (req, res) => {
     res.render("../view/login.ejs");
-})
+});
+app.get('/success', async (req, res) => {
+    res.render("../views/index.ejs", {userinfo:req.user});
+});
+
+app.get('/auth/google', Passport.authenticate('google', {scope: ['profile', 'email']}))
+
+app.get('/auth/google/callback', Passport.authenticate('google', {
+    failureRedirect: '/'
+}), async (req, res) => {
+    res.redirect('/success')
+});
+app.get('/logout', async (req, res) => {
+    req.session.destroy(function(e){
+        req.logout();
+        res.redirect('/');
+    });
+});
+module.exports = app
