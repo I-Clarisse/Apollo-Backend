@@ -11,5 +11,3 @@ logOut = async (req, res, next) => {
         message: "You have logged out successfully"
     })
 }
-
-module.exports = logOut;
