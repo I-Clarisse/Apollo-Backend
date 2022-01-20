@@ -31,6 +31,10 @@ const songSchema = new Schema({
     genre: {
         type: String,
         required: true,
+    },
+    postedAt: {
+        type: Date,
+        default: Date.now()
     }
 })
 
