@@ -34,3 +34,42 @@ export const createComment = async(req, res) => {
         res.status(500).send(err.message);
     }
 }
+
+export const updateComment = async(req, res) => {
+    try{
+        try {
+
+        
+        let commentInfo = await Comment.findById(req.comment._id);
+        if(!commentInfo) return res.status(400).send("The comment doesnot exist");
+        let content = (req.body.content) ? req.body.content : commentInfo.content;
+
+        let comment = await Comment.findByIdAndUpdate(req.comment._id, {
+            content: content
+        }, { new: true });
+        res.status(200).send({
+            message: 'comment updated successfully!',
+            data: comment
+        })
+    }
+    catch(err) {
+        res.status(400).send(err.message);
+    }
+    }
+    catch(err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export const deleteComment = async(req, res) => {
+    try {
+        let comment = await Comment.findById(req.comment._id);
+        if(!comment) return res.status(200).send("The commen doesnot exist!");
+
+        await Comment.findByIdAndRemove(req.comment._id);
+        res.status(200).send("Comment deleted successfully!");
+    }
+    catch(err) {
+        res.status(400).send(err.message);
+    }
+}

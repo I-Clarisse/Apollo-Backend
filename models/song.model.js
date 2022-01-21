@@ -11,6 +11,7 @@ const songSchema = new Schema({
     artist: {
         type: SchemaTypes.ObjectId,
         ref: 'user',
+        minLength: 1,
         required: true,
     },
     image: {
