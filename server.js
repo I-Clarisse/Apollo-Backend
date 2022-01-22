@@ -36,5 +36,5 @@ if(!config.get("PORT")){
 }
 const port = process.env.PORT || 8000
 app.listen(port, ()=>{
-    startupdebug(`Listening on port ${port}`)
+    startupdebug(`ListeningJ on port ${port}`)
 } )

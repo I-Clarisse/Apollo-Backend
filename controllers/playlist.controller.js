@@ -1,5 +1,4 @@
 const {Playlist, playlistValidation} = require('../models/playlist.model')
-const { post } = require('../routes/playlist.route')
 const { formatResult } = require('../utils/formatter')
 
 exports.welcome = async(req, res)=>{
@@ -13,13 +12,13 @@ exports.welcome = async(req, res)=>{
 exports.createPlaylist = async(req, res) =>{
     try {
         const {error} = playlistValidation(req.body)
+        if(error) return res.status(400).send(error.details)
 
-        const newPlaylist = await Playlist.findOne({playlistName:req.body.playlistName})
-        if(playlist) res.status("400").send("Playlist already exists");
+        let newPlaylist = await Playlist.findOne({playlistName:req.body.playlistName})
+        if(newPlaylist) res.status("400").send("Playlist already exists");
 
-        // playlist = new Playlist(_.pick(req.body,[playlistName]))
-        newPlaylist = new Playlist({playlistName: req.body.playlistName})
-
+        newPlaylist = new Playlist(_.pick(req.body,[playlistName]))
+        // newPlaylist = new Playlist({playlistName: req.body.playlistName})
         try{
             await newPlaylist.save()
             res.send(formatResult({
@@ -28,11 +27,11 @@ exports.createPlaylist = async(req, res) =>{
                 data: newPlaylist
             }))
         }catch (ex) {
-            res.status(400).send(ex.message)   
+            res.status(400).send(ex.details)   
         }
     }
     catch(err){
-        res.status(500).send("Something Failed! Try Again!")
+        res.status(500).send(err.details)
     }
 }
 
@@ -40,7 +39,7 @@ exports.addSongs = async(req, res) =>{
     try{
 
     }catch(error){
-        res.status(400).send(error.message)
+        res.status(400).send(error)
     }
 }
 

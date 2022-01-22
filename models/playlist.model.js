@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Joi = require('joi')
 const playlistSchema = new mongoose.Schema(
     {
     playlistName:{
@@ -19,9 +19,9 @@ const playlistSchema = new mongoose.Schema(
 
 exports.playlistValidation = (playlist) => {
     const schema = {
-        playlistName: Joi.String()
+        playlistName: Joi.string()
     }
-    return Joi.validate(playlist, schema)
+    return schema.validate(playlist, schema)
 }
 
 const Playlist = mongoose.model('playlists',playlistSchema)
