@@ -11,15 +11,15 @@ const commentSchema = new Schema({
         type: Date,
         default: Date.now(),
     },
-    post: {
-        type: SchemaTypes.ObjectId,
-        ref: 'post',
-        required: true,
-    },
-    commenter: {
-        type: SchemaTypes.ObjectId,
-        ref: 'user'
-    },
+    // postId: {
+    //     type: SchemaTypes.ObjectId,
+    //     ref: 'post',
+    //     required: true,
+    // },
+    // commenter: {
+    //     type: SchemaTypes.ObjectId,
+    //     ref: 'user'
+    // },
 
 })
 

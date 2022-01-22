@@ -1,4 +1,4 @@
-import mongoose, { SchemaTypes } from 'mongoose';
+import mongoose from 'mongoose';
 const { Schema, SchemaTypes, model } = mongoose;
 import idValidator from 'mongoose-id-validator';
 
@@ -8,12 +8,12 @@ const songSchema = new Schema({
         min: 3,
         required: true,
     },
-    artist: {
-        type: SchemaTypes.ObjectId,
-        ref: 'user',
-        minLength: 1,
-        required: true,
-    },
+    // artist: {
+    //     type: SchemaTypes.ObjectId,
+    //     ref: 'user',
+    //     minLength: 1,
+    //     required: true,
+    // },
     image: {
         type: String,
         required: true,
@@ -24,9 +24,8 @@ const songSchema = new Schema({
         maxLength: 30,
         required: true,
     },
-    content: {
+    lyrics: {
         type: String,
-        
         required: true,
     },
     genre: {
@@ -41,7 +40,7 @@ const songSchema = new Schema({
 
 songSchema.plugin(idValidator);
 
-const Song = model('model', songSchema);
+const Song = model('song', songSchema);
 
 const _Song = Song;
 
