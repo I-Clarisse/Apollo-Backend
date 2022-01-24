@@ -22,3 +22,5 @@ routes.post('/userLogin', async (req, res) => {
         token
     })
 });
+
+module.exports = routes
