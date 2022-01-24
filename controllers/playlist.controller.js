@@ -89,9 +89,11 @@ exports.editPlaylist = async(req, res) => {
             const playlist = await Playlist.findByIdAndUpdate(req.params.id,{
                 playlistName: playlistName
             })
-            return res.status(200).send({
-                playlistName: playlist.playlistName
-            })
+            return res.send(formatResult({
+                status: 200,
+                message: "PlaylistName edited",
+                data:playlist
+            }))
         } catch (error) {
             return res.status(400).send(error.details)
         }
@@ -102,7 +104,7 @@ exports.editPlaylist = async(req, res) => {
 
 exports.deletePlaylist = async(req, res) =>{
     try {
-        await Playlist.findByIdAndDelete(req.params.id)
+        await Playlist.findByIdAndRemove(req.params.id)
         return res.send(formatResult({
             status: 200,
             message: "Playlist deleted"

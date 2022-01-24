@@ -11,9 +11,9 @@ router.get('/playlist/all', getAllPlaylists)
 
 router.get('/playlist/:id', getUserPlaylist)
 
-router.put('playlist/edit/:id', editPlaylist)
+router.put('/playlist/edit/:id', editPlaylist)
 
 router.put('/playlist/addSongs', addSongs)
 
-router.delete('playlist/delete/:id', deletePlaylist)
+router.delete('/playlist/delete/:id', deletePlaylist)
 module.exports = router
