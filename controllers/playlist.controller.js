@@ -81,24 +81,57 @@ exports.getAllPlaylists = async(req, res) =>{
     }
 }
 
-exports.editPlaylist = async(req, res) => {
+// exports.editPlaylist = async(req, res) => {
+//     try {
+//         const {error} = validatePlaylistEdit(req.body)
+//         if (error) res.status(400).send(error.details)
+//         try {
+//             const playlist = await Playlist.findByIdAndUpdate(req.params.id,{
+//                 playlistName: req.body.playlistName
+//             })
+//             return res.send(formatResult({
+//                 status: 200,
+//                 message: "PlaylistName edited",
+//                 data: playlist
+//             }))
+//         } catch (ex) {
+//             return res.send(formatResult({
+//                 status: 400,
+//                 message: ex.message
+//             }))
+//         }
+//     } catch (ex) {
+//         return res.send(formatResult({
+//             status:400,
+//             message: ex.message
+//         }))
+//     }
+// }
+
+exports.editPlaylist = async (req, res) =>{
+    
     try {
         const {error} = validatePlaylistEdit(req.body)
-        if (error) res.status(400).send(error.details)
-        try {
-            const playlist = await Playlist.findByIdAndUpdate(req.params.id,{
-                playlistName: playlistName
-            })
-            return res.send(formatResult({
-                status: 200,
-                message: "PlaylistName edited",
-                data:playlist
-            }))
-        } catch (error) {
-            return res.status(400).send(error.details)
+        if(error) res.status(400).send(error.message)
+
+        const existingPlaylist = await Playlist.findOne({playlistName:req.body.playlistName})
+        if(existingPlaylist){
+            res.status("400").send("Playlist already exists");
         }
-    } catch (error) {
-        res.status(400).send(error.details)
+
+        const playlist = await Playlist.findByIdAndUpdate(req.params.id, {
+            playlistName: req.body.playlistName
+        })
+        return res.send(formatResult({
+            status: 200,
+            message: "Playlist edited",
+            data: playlist
+        }))
+    } catch (ex) {
+        return res.send(formatResult({
+            status: 400,
+            message: ex.message
+        }))
     }
 }
 

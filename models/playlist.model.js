@@ -28,7 +28,7 @@ exports.validatePlaylistEdit = (playlist) =>{
     const schema = Joi.object({
         playlistName: Joi.string()
     })
-    return schema.validate(playlist, schema)
+    return schema.validate(playlist)
 }
 const Playlist = mongoose.model('playlists',playlistSchema)
 exports.Playlist = Playlist
