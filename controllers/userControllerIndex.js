@@ -1,9 +1,10 @@
+const { ensureAuth, ensureGuest } = require('../middlewares/auth');
 const router = require('express').Router();
 
-router.get('/', async(req, res) => {
+router.get('/', ensureGuest, async(req, res) => {
     res.render('../views/login.ejs');
 });
-router.get('/success', async(req, res) => {
+router.get('/success', ensureAuth, async(req, res) => {
     res.send('../views/index.ejs', {userinfo: req.user});
 });
 module.exports = router
