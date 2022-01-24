@@ -1,5 +1,6 @@
-const {Playlist, playlistValidation} = require('../models/playlist.model')
+const {Playlist, playlistValidation, validatePlaylistEdit} = require('../models/playlist.model')
 const { formatResult } = require('../utils/formatter')
+const _ = require("lodash")
 
 exports.welcome = async(req, res)=>{
     try {
@@ -15,9 +16,11 @@ exports.createPlaylist = async(req, res) =>{
         if(error) return res.status(400).send(error.details)
 
         let newPlaylist = await Playlist.findOne({playlistName:req.body.playlistName})
-        if(newPlaylist) res.status("400").send("Playlist already exists");
-
-        newPlaylist = new Playlist(_.pick(req.body,[playlistName]))
+        if(newPlaylist){
+            res.status("400").send("Playlist already exists");
+        }else{
+            newPlaylist = new Playlist(_.pick(req.body,['playlistName']))
+        console.log(req.body.playlistName)
         // newPlaylist = new Playlist({playlistName: req.body.playlistName})
         try{
             await newPlaylist.save()
@@ -27,15 +30,18 @@ exports.createPlaylist = async(req, res) =>{
                 data: newPlaylist
             }))
         }catch (ex) {
-            res.status(400).send(ex.details)   
+            return res.status(400).send(ex.details)   
         }
     }
+        
+}
     catch(err){
-        res.status(500).send(err.details)
+        console.log(err)
+        return res.status(500).send(err.details)
     }
 }
 
-exports.addSongs = async(req, res) =>{
+exports.addSongs = async(req, res) => {
     try{
 
     }catch(error){
@@ -62,7 +68,6 @@ exports.getUserPlaylist = async(req, res) =>{
     }
 }
 
-
 exports.getAllPlaylists = async(req, res) =>{
     try {
         const playlists = await Playlist.find()
@@ -76,15 +81,36 @@ exports.getAllPlaylists = async(req, res) =>{
     }
 }
 
-exports.deletePlaylist = async (req, res) =>{
+exports.editPlaylist = async(req, res) => {
     try {
-        const {error} = playlistValidation(req.body)
-        if (error) res.send(formatResult({
-            status: 400,
-            message: error.details[0].message
-        }))
-        Playlist.findByIdAndRemove(req.params.id)
+        const {error} = validatePlaylistEdit(req.body)
+        if (error) res.status(400).send(error.details)
+        try {
+            const playlist = await Playlist.findByIdAndUpdate(req.params.id,{
+                playlistName: playlistName
+            })
+            return res.status(200).send({
+                playlistName: playlist.playlistName
+            })
+        } catch (error) {
+            return res.status(400).send(error.details)
+        }
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).send(error.details)
+    }
+}
+
+exports.deletePlaylist = async(req, res) =>{
+    try {
+        await Playlist.findByIdAndDelete(req.params.id)
+        return res.send(formatResult({
+            status: 200,
+            message: "Playlist deleted"
+        }))
+    } catch (error) {
+        return res.send(formatResult({
+            status: 400,
+            message: error.details
+        }))
     }
 }

@@ -34,7 +34,7 @@ if(!config.get("PORT")){
     error("FATAL ERROR: Connection to port is not defined")
     process.exit(-1);
 }
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 6000
 app.listen(port, ()=>{
-    startupdebug(`ListeningJ on port ${port}`)
+    startupdebug(`Listening on port ${port}`)
 } )

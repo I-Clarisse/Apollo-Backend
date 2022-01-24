@@ -16,13 +16,19 @@ const playlistSchema = new mongoose.Schema(
         default: Date.now()
     }
 })
-
+Joi.string()
 exports.playlistValidation = (playlist) => {
-    const schema = {
+    const schema = Joi.object({
         playlistName: Joi.string()
-    }
-    return schema.validate(playlist, schema)
+    })
+    return schema.validate(playlist)
 }
 
+exports.validatePlaylistEdit = (playlist) =>{
+    const schema = Joi.object({
+        playlistName: Joi.string()
+    })
+    return schema.validate(playlist, schema)
+}
 const Playlist = mongoose.model('playlists',playlistSchema)
 exports.Playlist = Playlist
