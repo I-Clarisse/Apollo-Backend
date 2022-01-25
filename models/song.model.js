@@ -14,14 +14,12 @@ const songSchema = new Schema({
     //     minLength: 1,
     //     required: true,
     // },
-    image: {
-        type: String,
-        required: true,
-    },
+    // image: {
+    //     type: String,
+    //     required: true,
+    // },
     description: {
         type: String,
-        minLength: 3,
-        maxLength: 30,
         required: true,
     },
     lyrics: {
@@ -43,5 +41,5 @@ songSchema.plugin(idValidator);
 const Song = model('song', songSchema);
 
 const _Song = Song;
-
+    
 export { _Song as Song };
