@@ -9,6 +9,7 @@ import { corsFunction } from './utils/cors.js';
 import production from './utils/production.js';
 import commentRoutes from './routes/comment.routes.js';
 import songRoutes from './routes/song.routes.js';
+import shareRoutes from './routes/share.routes.js';
 
 
 app.use(cors());
@@ -19,6 +20,7 @@ app.use(urlencoded({extended: true}));
 
 app.use(commentRoutes);
 app.use(songRoutes);
+app.use(shareRoutes);
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server is running on port ${PORT}`);

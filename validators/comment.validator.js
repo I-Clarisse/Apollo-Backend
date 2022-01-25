@@ -19,8 +19,8 @@ export async function validateCommentCreation(req, res, next) {
     }
     catch(err) {
         res.status(400).send(err.message);
-    }
-}
+    }  
+}   
 
 export async function validateUpdateComment(req, res, next) {
     try {

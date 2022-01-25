@@ -68,6 +68,6 @@ export const deleteComment = async(req, res) => {
         res.status(200).send("Comment deleted successfully!");
     }
     catch(err) {
-        res.status(400).send(err.message);
+        res.status(400).send(err.message);  
     }
 }
