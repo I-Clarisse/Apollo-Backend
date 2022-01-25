@@ -5,7 +5,7 @@ const passport = require('passport');
 const app = express();
 
 app.get('/', async (req, res) => {
-    res.render("../view/login.ejs");
+    res.render("../views/login.ejs");
 });
 app.get('/success', async (req, res) => {
     res.render("../views/index.ejs", {userinfo:req.user});

@@ -1,12 +1,13 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategyl
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
 const GoogleAccount = require('../models/userModel');
+const OAuth2Data = require('../client_secret_884821326007-u8viojarb5138bq8a1hd50je7msl62lh.apps.googleusercontent.com.json')
 
 passport.use(
     new GoogleStrategy({
-        clientID:"",
-        clientSecret: "",
-        callbackUrl: ""
+        clientID: "OAuth2Data.client.id",
+        clientSecret: "OAuth2Data.client.secret",
+        callbackUrl: "OAuth2Data.client.redirect"
     }, 
     async (accessToken, refreshToken, profile, done) => {
         console.log(profile);
@@ -43,4 +44,5 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
     GoogleAccount.findById(id, (err, user) => done(err, user));
 });
-modoule.exports.Passport = passport
+
+module.exports.Passport = passport

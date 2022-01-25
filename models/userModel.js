@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 const config = require('config');
-const { ONE_DAY } = require('../utils/imports');
+const { ONE_DAY } = require('../Utils/imports');
 const { ObjectId } = mongoose.Schema.Types;
 
 //creating the user schema
@@ -51,12 +51,4 @@ userSchema.methods.generateToken = function(){
     })
 }
 
-const token = user.generateAuthToken();
-const options = {
-    expires: new date (date.now() + ONE_DAY),
-    httpOnly: true
-}
-res.status(statusCode).cookie('token', token, options).json({
-    success: true,
-    token: token
-});
+module.exports = mongoose.model("User", userSchema);

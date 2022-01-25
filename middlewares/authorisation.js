@@ -2,6 +2,17 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 const protect = async (req, res, next) => {
+
+    const token = User.generateAuthToken();
+    const options = {
+    expires: new date (date.now() + ONE_DAY),
+    httpOnly: true
+    }
+    res.status(statusCode).cookie('token', token, options).json({
+    success: true,
+    token: token
+    });
+
     let token;
     if(req.headers.authorization && headers.authorization.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
