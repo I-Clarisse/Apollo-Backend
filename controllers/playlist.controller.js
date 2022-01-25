@@ -2,14 +2,6 @@ const {Playlist, playlistValidation, validatePlaylistEdit} = require('../models/
 const { formatResult } = require('../utils/formatter')
 const _ = require("lodash")
 
-exports.welcome = async(req, res)=>{
-    try {
-        res.status(200).send("Hello World Welcome to Apollo")
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
-
 exports.createPlaylist = async(req, res) =>{
     try {
         const {error} = playlistValidation(req.body)
@@ -41,14 +33,6 @@ exports.createPlaylist = async(req, res) =>{
     }
 }
 
-exports.addSongs = async(req, res) => {
-    try{
-
-    }catch(error){
-        res.status(400).send(error)
-    }
-}
-
 exports.getUserPlaylist = async(req, res) =>{
     try{
          const playlistFound = await Playlist.findById(req.params.id)
@@ -77,39 +61,11 @@ exports.getAllPlaylists = async(req, res) =>{
             data: playlists
         }))
     } catch (error) {
-        res.status(400).send(error.message)
+        return res.status(400).send(error.message)
     }
 }
 
-// exports.editPlaylist = async(req, res) => {
-//     try {
-//         const {error} = validatePlaylistEdit(req.body)
-//         if (error) res.status(400).send(error.details)
-//         try {
-//             const playlist = await Playlist.findByIdAndUpdate(req.params.id,{
-//                 playlistName: req.body.playlistName
-//             })
-//             return res.send(formatResult({
-//                 status: 200,
-//                 message: "PlaylistName edited",
-//                 data: playlist
-//             }))
-//         } catch (ex) {
-//             return res.send(formatResult({
-//                 status: 400,
-//                 message: ex.message
-//             }))
-//         }
-//     } catch (ex) {
-//         return res.send(formatResult({
-//             status:400,
-//             message: ex.message
-//         }))
-//     }
-// }
-
 exports.editPlaylist = async (req, res) =>{
-    
     try {
         const {error} = validatePlaylistEdit(req.body)
         if(error) res.status(400).send(error.message)
