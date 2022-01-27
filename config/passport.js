@@ -1,13 +1,13 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
-const GoogleAccount = require('../models/userModel');
+const GoogleAccount = require('../models/googleAccountModel');
 const OAuth2Data = require('../client_secret_884821326007-u8viojarb5138bq8a1hd50je7msl62lh.apps.googleusercontent.com.json')
 
 passport.use(
     new GoogleStrategy({
-        clientID: "OAuth2Data.client.id",
-        clientSecret: "OAuth2Data.client.secret",
-        callbackUrl: "OAuth2Data.client.redirect"
+        clientID: "884821326007-u8viojarb5138bq8a1hd50je7msl62lh.apps.googleusercontent.com",
+        clientSecret: "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",
+        callbackURL: "http://localhost:5000/auth/google/callback"
     }, 
     async (accessToken, refreshToken, profile, done) => {
         console.log(profile);
@@ -20,7 +20,7 @@ passport.use(
             image: profile.photos[0].value,
             email: profile.emails[0].value
         }
-        console.log(newUser);
+        console.log(newUser.firstName);
         try{
             //finding the user in the database
             let user = await GoogleAccount.findOne({googleId: profile.id});

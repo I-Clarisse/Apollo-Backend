@@ -5,6 +5,6 @@ router.get('/', ensureGuest, async(req, res) => {
     res.render('../views/login.ejs');
 });
 router.get('/success', ensureAuth, async(req, res) => {
-    res.send('../views/index.ejs', {userinfo: req.user});
+    res.send('../views/index.ejs', {userinfo: req.newUser});
 });
 module.exports = router

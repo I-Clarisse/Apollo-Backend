@@ -8,7 +8,7 @@ app.get('/', async (req, res) => {
     res.render("../views/login.ejs");
 });
 app.get('/success', async (req, res) => {
-    res.render("../views/index.ejs", {userinfo:req.user});
+    res.render("../views/index.ejs", {userinfo:req.newUser});
 });
 
 app.get('/auth/google', Passport.authenticate('google', {scope: ['profile', 'email']}))

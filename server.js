@@ -10,12 +10,23 @@ const dbErrors = debug('app:errors')
 const error = debug('error')
 const dotenv = require('dotenv')
 const passport = require('passport')
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 dotenv.config()
 //calling the bodyParsing middleware
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 // app.use(express.static())
-
+app.use(
+    session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: "mongodb+srv://Apollo:apollo123@apollo.2ectx.mongodb.net/Apollo"
+        })
+    })
+)
 //calling the routes
 // app.use(require("./routes/"))
 app.use(require('./controllers/userLoginGoogle'));
