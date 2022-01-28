@@ -105,3 +105,30 @@ exports.deletePlaylist = async(req, res) =>{
         }))
     }
 }
+
+exports.addSongs = async(req, res) => {
+    try{
+        const playlist = await Playlist.findById(req.params.playlistId)
+        if(!playlist){
+            return res.send(formatResult({
+                status: 200,
+                message: "Playlist not found"
+            }))
+        }
+        const song = await song.findById(req.params.songId)
+        if(!song){
+            return res.send(formatResult({
+                status: 200,
+                message: "Song not found"
+            }))
+        }
+        playlist['playlistSongs'].push(song);
+        return res.send(formatResult({
+            status: 200,
+            message: "Songs added successfully",
+            data: playlist
+        }))
+    }catch(error){
+        return res.status(400).send(error.message)
+    }
+}
