@@ -31,7 +31,7 @@ exports.creatingPost = async(req,res) =>{
 
 exports.getAllPosts = async(req, res) =>{
     const posts = await Post.find({})
-    .populate('user')
+    .populate('postedBy')
     .populate({
         path: 'comments',
         populate: {
@@ -60,7 +60,7 @@ exports.addPost = async(req,res) => {
     let post = await Post.create(req.body);
 
     if(req.files) {
-        if(!req.files.photo.mimetype.startsWith('image')) {
+        if(!req.files.photo.mimetype.startsWith('image/')) {
             res.status (401);
             throw new Error('Please add image file');
         }

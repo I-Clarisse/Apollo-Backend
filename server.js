@@ -18,6 +18,7 @@ app.use(express.json())
 
 //calling the routes
 app.use(require('./routes/playlist.route'))
+app.use(require('./routes/post.route'))
 // app.use(require('./routes/user.route'))
 //connecting to the database
 // let password = config.get("DATABASE_PASSWORD")

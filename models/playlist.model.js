@@ -28,7 +28,7 @@ exports.playlistValidation = (playlist) => {
     return schema.validate(playlist)
 }
 //idValidator to validate if the document we are referencing exists
-playlistSchema.plugin(idValidator);
+// playlistSchema.plugin(idValidator);
 
 exports.validatePlaylistEdit = (playlist) =>{
     const schema = Joi.object({
