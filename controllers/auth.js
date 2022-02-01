@@ -18,6 +18,7 @@ routes.post('/userLogin', async (req, res) => {
     if(!matchPassword) return json('Invalid email or password').status(400);
     let token = user.generateToken()
     return res.status(200).json({
+        message: "Welcome to Litan, " +user.name+ ", enjoy!",
         success: true,
         token
     })

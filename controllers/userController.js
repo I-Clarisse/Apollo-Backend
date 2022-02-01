@@ -1,4 +1,5 @@
 const express = require('express');
+const { protect } = require('../middlewares/authorisation');
 const User = require('../models/userModel');
 
 const routes = express.Router();
@@ -22,7 +23,7 @@ routes.post("/userRegister", async (req, res) => {
 })
 
 //update user's account information
-routes.put("/userUpdate/:id", async (req, res) => {
+routes.put("/userUpdate/:id",protect, async (req, res) => {
     try{
         const user = await User.findById(req.params.id);
         if(!user) return res.json("No record of the user found")

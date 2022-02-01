@@ -46,7 +46,7 @@ userSchema.methods.generateToken = function(){
     return JWT.sign({
         id: this._id,
         isAdmin: this.isAdmin
-    }, process.env.JWT_SECRET_KEY, {
+    }, `${process.env.JWT_SECRET_KEY}`, {
         expiresIn: ONE_DAY
     })
 }
