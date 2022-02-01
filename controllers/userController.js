@@ -27,7 +27,12 @@ routes.put("/userUpdate/:id", async (req, res) => {
         const user = await User.findById(req.params.id);
         if(!user) return res.json("No record of the user found")
         await User.updateOne({_id: req.params.id}, {
-            $set = req.body
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            date_of_birth: req.body.date_of_birth,
+            gender: req.body.gender,
+            password: req.body.password
         })
         .then((user) => {
             res.status(200).json({

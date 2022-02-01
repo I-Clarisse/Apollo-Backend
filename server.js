@@ -29,6 +29,9 @@ app.use(
 )
 //calling the routes
 // app.use(require("./routes/"))
+app.use(require('./controllers/userController'));
+app.use(require('./controllers/logOutController'));
+app.use(require('./controllers/auth'));
 app.use(require('./controllers/userLoginGoogle'));
 app.use(require('./controllers/userControllerIndex'));
 // app.get('/', (req, res) =>{

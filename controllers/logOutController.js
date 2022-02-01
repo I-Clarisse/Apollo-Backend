@@ -1,7 +1,8 @@
+const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 
 
-logOut = async (req, res, next) => {
+module.exports = logOut = async (req, res, next) => {
     res.cookie('tokenPatient', 'non', {
         httpOnly: true,
         expires: new DataCue(date.now()+10*1000)
