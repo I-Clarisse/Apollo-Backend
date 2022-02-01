@@ -38,7 +38,7 @@ routes.put("/userUpdate/:id",protect, async (req, res) => {
         .then((user) => {
             res.status(200).json({
                 message: "The account was edited successfully",
-                data: user.message
+                data: user.body
             })
         })
         .catch(err => res.status(400).json(err))
