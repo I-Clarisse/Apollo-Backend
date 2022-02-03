@@ -39,7 +39,7 @@ exports.getAllPosts = async(req, res) =>{
             model: 'User',
         }
     })
-    res.status(201).json({
+    res.status(200).json({
         success: true,
         count: posts.length,
         data: posts
@@ -47,7 +47,7 @@ exports.getAllPosts = async(req, res) =>{
 }
 
 exports.getPost = async(req, res) => {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).pop;
     if(!post) {
         res.status(404);
         throw new Error('Post not Found')

@@ -11,6 +11,8 @@ const error = debug('error')
 const dotenv = require('dotenv')
 const req = require('express/lib/request')
 dotenv.config({path: './.env'});
+
+
 //calling the bodyParsing middleware
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
