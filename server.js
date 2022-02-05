@@ -10,6 +10,8 @@ const dbErrors = debug('app:errors')
 const error = debug('error')
 const dotenv = require('dotenv')
 const req = require('express/lib/request')
+const swaggerUi = require('swagger-ui-express')
+const swagerDocument = require('swagger.json')
 dotenv.config({path: './.env'});
 
 
@@ -17,7 +19,7 @@ dotenv.config({path: './.env'});
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 // app.use(express.static())
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 //calling the routes
 app.use(require('./routes/playlist.route'))
 app.use(require('./routes/post.route'))
