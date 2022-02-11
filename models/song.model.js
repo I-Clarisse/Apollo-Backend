@@ -8,12 +8,12 @@ const songSchema = new Schema({
         min: 3,
         required: true,
     },
-    // artist: {
-    //     type: SchemaTypes.ObjectId,
-    //     ref: 'user',
-    //     minLength: 1,
-    //     required: true,
-    // },
+    artist: {
+        type: SchemaTypes.ObjectId,
+        ref: 'user',
+        minLength: 1,
+        required: true,
+    },
     // image: {
     //     type: String,
     //     required: true,

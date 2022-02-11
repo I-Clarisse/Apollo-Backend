@@ -5,7 +5,7 @@ export async function validateSongPosting(req, res, next) {
     try {
         const schema = Joi.object({
             name: Joi.string().required(),
-            artist: Joi.string().min(1).required(),
+            artist: Joi.array().min(1).required(),
             image: Joi.string().required(),
             description: Joi.string().required(),
             lyrics: Joi.string().required(),
@@ -30,7 +30,7 @@ export async function validateUpdateSong(req, res, next) {
     try {
         const schema = Joi.object({
             name: Joi.string().required(),
-            artist: Joi.string().min(1).required(),
+            artist: Joi.array().min(1).required(),
             image: Joi.string().required(),
             description: Joi.string().required(),
             lyrics: Joi.string().required(),
