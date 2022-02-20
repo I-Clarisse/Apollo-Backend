@@ -22,7 +22,7 @@ const playlistSchema = new mongoose.Schema(
 })
 Joi.string()
 exports.playlistValidation = (playlist) => {
-    const schema = Joi.object({
+    const schema = Joi. object({
         playlistName: Joi.string()
     })
     return schema.validate(playlist)
