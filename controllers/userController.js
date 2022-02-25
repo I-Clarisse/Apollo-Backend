@@ -47,6 +47,7 @@ routes.put("/userUpdate/:id",protect, async (req, res) => {
     }
 });
 
+//follow a person
 routes.put('follow',protect, (req, res)=>{
     User.findByIdAndUpdate(req.body.followId, {
         $push: {followers:  req.User._id}
@@ -54,9 +55,31 @@ routes.put('follow',protect, (req, res)=>{
         if(err){
             return res.status(422).json({error:err})
         }
-        User.findByIdAndUpdate(req.User._id), {
-            $push: {following: req.body.followId}
-        }, {new: true}
+        User.findByIdAndUpdate(req.User._id, {
+            $push : {following: req.body.followId}
+        },{new: true}).then(result=>{
+            res.json(result);
+        }).catch(err=>{
+            return res.status(422).json({error: err})
+        })
+    })
+})
+
+//unfollow
+routes.put('unfollow',protect, (req, res)=>{
+    User.findByIdAndUpdate(req.body.unfollowId, {
+        $pull: {followers:  req.User._id}
+    }, {new: true}, (err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }
+        User.findByIdAndUpdate(req.User._id, {
+            $pull : {following: req.body.unfollowId}
+        },{new: true}).then(result=>{
+            res.json(result);
+        }).catch(err=>{
+            return res.status(422).json({error: err})
+        })
     })
 })
 
