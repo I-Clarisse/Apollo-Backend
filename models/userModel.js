@@ -25,6 +25,10 @@ let userSchema = new mongoose.Schema({
     password: {
         type:String
     },
+    followers: [{
+        type: ObjectId, ref: "User"
+    }],
+    following : [{type: ObjectId, ref:"User"}]
 },{
     timestamps: true
 });

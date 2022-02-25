@@ -47,4 +47,10 @@ routes.put("/userUpdate/:id",protect, async (req, res) => {
     }
 });
 
+routes.put('follow', (req, res)=>{
+    User.findByIdAndUpdate(req.body.followId, {
+        $push: {followers}
+    })
+})
+
 module.exports = routes
