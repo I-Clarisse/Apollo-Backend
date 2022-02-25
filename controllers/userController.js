@@ -47,9 +47,16 @@ routes.put("/userUpdate/:id",protect, async (req, res) => {
     }
 });
 
-routes.put('follow', (req, res)=>{
+routes.put('follow',protect, (req, res)=>{
     User.findByIdAndUpdate(req.body.followId, {
-        $push: {followers}
+        $push: {followers:  req.User._id}
+    }, {new: true}, (err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }
+        User.findByIdAndUpdate(req.User._id), {
+            $push: {following: req.body.followId}
+        }, {new: true}
     })
 })
 
