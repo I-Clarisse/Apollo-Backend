@@ -1,7 +1,14 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
-const token = User.generateAuthToken();
+const token = User.generateAuthToken = async function(){
+    return JWT.sign ({
+        id: this._id,
+        isAdmin: this.isAdmin
+    }, `${process.env.JWT_SECRET_KEY}`, {
+        expiresIn: ONE_DAY
+    })
+};
     const options = {
     expires: new date (date.now() + ONE_DAY),
     httpOnly: true
