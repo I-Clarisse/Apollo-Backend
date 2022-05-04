@@ -9,6 +9,7 @@ const dbDebug = debug('app:db')
 const dbErrors = debug('app:errors')
 const error = debug('error')
 const dotenv = require('dotenv')
+const morgan = require('morgan')
 // const req = require('express/lib/request')
 // const swaggerUi = require('swagger-ui-express')
 // const swagerDocument = require('swagger.json')
@@ -18,6 +19,7 @@ dotenv.config({path: './.env'});
 //calling the bodyParsing middleware
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
+app.use(morgan('dev'))
 // app.use(express.static())
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 //calling the routes

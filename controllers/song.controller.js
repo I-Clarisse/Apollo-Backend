@@ -1,6 +1,7 @@
-import { Song } from '../models/song.model.js';
-import lodash from 'lodash';
+const {Song} = require('.../models/song.model')
+const lodash = require('lodash')
 const { pick } = lodash;
+
 
 export const getSong = async(req, res) => {
     try {
