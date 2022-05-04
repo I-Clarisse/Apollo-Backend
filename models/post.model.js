@@ -1,0 +1,73 @@
+const mongoose = require('mongoose')
+const Joi = require('joi')
+// import { required } from 'joi';
+// import idValidator from 'mongoose-id-validator';
+
+const postSchema = new mongoose.Schema({
+    photo:{
+        type: String,
+        default: {},
+        required: [true, 'Please add a photo']
+    },
+    caption: {
+        type: String,
+        required: [true, 'Please add a description']
+    },
+    location: {
+        type: String
+    },
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: new Date(Date.now()),
+    },
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users'
+        },
+    ]
+},
+{
+    toJSON: {
+        virtuals: true
+    },
+    toObject:{
+        virtuals: true
+    }
+})
+
+exports.postValidation = (post) =>{
+    const schema = Joi.object({
+        postImage: Joi.string().require(),
+        caption: Joi.string(),
+        userId: Joi.string(),
+        location: Joi.string()
+    })
+    return schema.validate(post)
+}
+
+//creating and populating virtual property 'comments' in postSchema
+//
+postSchema.virtual('comments',{
+    ref: 'comments',// comment is table
+    // localField: '_id', //of post collection
+    // foreignField: 'post', //of comment collection
+    localField: 'comments',
+    foreignField: '_id',
+    justOne: false 
+})
+
+postSchema.virtual('users',{
+    ref: 'users',
+    localField: 'postedBy',
+    foreignField: '_id',
+    justOne: true
+})
+
+const Post = mongoose.model('posts', postSchema);
+exports.Post = Post;
