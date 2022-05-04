@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema, SchemaTypes, model } = mongoose;
 const idValidator = require('mongoose-id-validator')
 
-const songSchema = new Schema({
+const songSchema = new mongoose.Schema({
     name: {
         type: String,
         min: 3,
