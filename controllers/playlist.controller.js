@@ -1,4 +1,5 @@
 const {Playlist, playlistValidation, validatePlaylistEdit} = require('../models/playlist.model')
+const {Song} = require('../models/song.model')
 const { formatResult } = require('../utils/formatter')
 const _ = require("lodash")
 
@@ -125,10 +126,34 @@ exports.addSongs = async(req, res) => {
         playlist['playlistSongs'].push(song);
         return res.send(formatResult({
             status: 200,
-            message: "Songs added successfully",
+            message: "Song added successfully",
             data: playlist
         }))
     }catch(error){
+        return res.status(400).send(error.message)
+    }
+}
+
+exports.addSongs = async (req, res) => {
+    try {
+        const playlist = await Playlist.findById(req.params.playlistId)
+        if(!playlist){
+            return res.send(formatResult({
+                status: 200,
+                message: "Playlist not found"
+            }))
+        const song = await Song.findById(req.params.songId)
+        if(!song){
+            return res.send(formatResult({
+                status: 200,
+                message: "Song not found"
+            }))
+        }
+        const newPlaylist = await Playlist.findByIdAndUpdate(req.params.playlistId, {
+            playlistSongs: playlist['playlistSongs'].push(song)
+        })
+        }
+    } catch (error) {
         return res.status(400).send(error.message)
     }
 }

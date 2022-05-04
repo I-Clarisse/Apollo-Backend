@@ -13,6 +13,6 @@ router.put('/playlist/edit/:id', editPlaylist)
 
 router.delete('/playlist/delete/:id', deletePlaylist)
 
-router.post('/playlist/addSongs/:playlistId/:songId', addSongs)
+router.put('/playlist/addSongs/:playlistId/:songId', addSongs)
 
 module.exports = router
