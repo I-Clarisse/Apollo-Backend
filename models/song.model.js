@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose')
 const { Schema, SchemaTypes, model } = mongoose;
-import idValidator from 'mongoose-id-validator';
+const idValidator = require('mongoose-id-validator')
 
-const songSchema = new Schema({
+const songSchema = new mongoose.Schema({
     name: {
         type: String,
         min: 3,
@@ -38,8 +38,10 @@ const songSchema = new Schema({
 
 songSchema.plugin(idValidator);
 
-const Song = model('song', songSchema);
+// const Song = model('song', songSchema);
+const Song = mongoose.model('song', songSchema);
+exports.Song = Song;
 
-const _Song = Song;
+// const _Song = Song;
     
-export { _Song as Song };
+// export { _Song as Song };

@@ -106,54 +106,37 @@ exports.deletePlaylist = async(req, res) =>{
         }))
     }
 }
-
-exports.addSongs = async(req, res) => {
-    try{
-        const playlist = await Playlist.findById(req.params.playlistId)
-        if(!playlist){
-            return res.send(formatResult({
-                status: 200,
-                message: "Playlist not found"
-            }))
-        }
-        const song = await song.findById(req.params.songId)
-        if(!song){
-            return res.send(formatResult({
-                status: 200,
-                message: "Song not found"
-            }))
-        }
-        playlist['playlistSongs'].push(song);
-        return res.send(formatResult({
-            status: 200,
-            message: "Song added successfully",
-            data: playlist
-        }))
-    }catch(error){
-        return res.status(400).send(error.message)
-    }
-}
-
 exports.addSongs = async (req, res) => {
     try {
         const playlist = await Playlist.findById(req.params.playlistId)
         if(!playlist){
             return res.send(formatResult({
-                status: 200,
+                status: 404,
                 message: "Playlist not found"
             }))
+        }
         const song = await Song.findById(req.params.songId)
+        console.log(song)
         if(!song){
             return res.send(formatResult({
-                status: 200,
+                status: 404,
                 message: "Song not found"
             }))
+
         }
         const newPlaylist = await Playlist.findByIdAndUpdate(req.params.playlistId, {
-            playlistSongs: playlist['playlistSongs'].push(song)
+             playlistSongs: playlist['playlistSongs'].push(song)
         })
-        }
-    } catch (error) {
-        return res.status(400).send(error.message)
+        return res.send(formatResult({
+            status: 200,
+            message: "Song added successfully",
+            data: newPlaylist
+        }))
+    }
+    catch (error) {
+        return res.send(formatResult({
+            status: 400,
+            message: error.message
+        }))
     }
 }

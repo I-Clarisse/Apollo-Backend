@@ -21,10 +21,14 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.1.6",
+    "mongoose-id-validator": "^0.6.0",
     "nodemon": "^2.0.16",
     "passport": "^0.5.2",
     "passport-google-oauth20": "^2.0.0",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.3.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
   }
 }
