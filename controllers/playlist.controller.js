@@ -122,15 +122,14 @@ exports.addSongs = async (req, res) => {
                 status: 404,
                 message: "Song not found"
             }))
-
         }
-        const newPlaylist = await Playlist.findByIdAndUpdate(req.params.playlistId, {
-             playlistSongs: playlist['playlistSongs'].push(song)
-        })
+        playlist.playlistSongs.push(song)
+        playlist.save()
+        console.log(playlist)
+
         return res.send(formatResult({
             status: 200,
             message: "Song added successfully",
-            data: newPlaylist
         }))
     }
     catch (error) {
