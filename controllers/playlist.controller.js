@@ -36,7 +36,7 @@ exports.createPlaylist = async(req, res) =>{
 }
 
 
-
+// get one user playlist
 exports.getUserPlaylist = async(req, res) =>{
     try{
          const playlistFound = await Playlist.findById(req.params.id)
