@@ -56,6 +56,7 @@ exports.getUserPlaylist = async(req, res) =>{
     }
 }
 
+//get all user playlist 
 exports.getAllPlaylists = async(req, res) =>{
     try {
         const playlists = await Playlist.find()
@@ -68,6 +69,7 @@ exports.getAllPlaylists = async(req, res) =>{
         return res.status(400).send(error.message)
     }
 }
+
 
 exports.editPlaylist = async (req, res) =>{
     try {
