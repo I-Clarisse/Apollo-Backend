@@ -70,7 +70,7 @@ exports.getAllPlaylists = async(req, res) =>{
     }
 }
 
-
+//update user playlist
 exports.editPlaylist = async (req, res) =>{
     try {
         const {error} = validatePlaylistEdit(req.body)
