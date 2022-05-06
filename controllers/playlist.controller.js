@@ -3,6 +3,7 @@ const {Song} = require('../models/song.model')
 const { formatResult } = require('../utils/formatter')
 const _ = require("lodash")
 
+//create new playlist
 exports.createPlaylist = async(req, res) =>{
     try {
         const {error} = playlistValidation(req.body)
@@ -33,6 +34,8 @@ exports.createPlaylist = async(req, res) =>{
         return res.status(500).send(err.details)
     }
 }
+
+
 
 exports.getUserPlaylist = async(req, res) =>{
     try{
