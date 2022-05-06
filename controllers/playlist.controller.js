@@ -3,6 +3,7 @@ const {Song} = require('../models/song.model')
 const { formatResult } = require('../utils/formatter')
 const _ = require("lodash")
 
+//create new playlist
 exports.createPlaylist = async(req, res) =>{
     try {
         const {error} = playlistValidation(req.body)
@@ -34,6 +35,8 @@ exports.createPlaylist = async(req, res) =>{
     }
 }
 
+
+// get one user playlist
 exports.getUserPlaylist = async(req, res) =>{
     try{
          const playlistFound = await Playlist.findById(req.params.id)
