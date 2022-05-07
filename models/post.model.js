@@ -4,7 +4,7 @@ const Joi = require('joi')
 // import idValidator from 'mongoose-id-validator';
 
 const postSchema = new mongoose.Schema({
-    photo:{
+    postImage:{
         type: String,
         default: {},
         required: [true, 'Please add a photo']
@@ -43,7 +43,7 @@ const postSchema = new mongoose.Schema({
 
 exports.postValidation = (post) =>{
     const schema = Joi.object({
-        postImage: Joi.string().require(),
+        postImage: Joi.string(),
         caption: Joi.string(),
         userId: Joi.string(),
         location: Joi.string()
