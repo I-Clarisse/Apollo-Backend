@@ -13,14 +13,12 @@ exports.createPlaylist = async(req, res) =>{
         if(newPlaylist){
             res.status("400").send("Playlist already exists");
         }else{
-            newPlaylist = new Playlist(_.pick(req.body,['playlistName']))
-        console.log(req.body.playlistName)
-        // newPlaylist = new Playlist({playlistName: req.body.playlistName})
+            newPlaylist = new Playlist(_.pick(req.body,['playlistName', 'playlistSongs']))
         try{
             await newPlaylist.save()
             res.send(formatResult({
                 status: 201,
-                message: "post created successfully",
+                message: "Playlist created successfully",
                 data: newPlaylist
             }))
         }catch (ex) {
@@ -34,7 +32,6 @@ exports.createPlaylist = async(req, res) =>{
         return res.status(500).send(err.details)
     }
 }
-
 
 // get one user playlist
 exports.getUserPlaylist = async(req, res) =>{
@@ -99,10 +96,20 @@ exports.editPlaylist = async (req, res) =>{
 
 exports.deletePlaylist = async(req, res) =>{
     try {
+        const playlist = await Playlist.findById(req.params.id)
+        const playlistName = playlist.playlistName;
+
+        if(!playlist){
+            return res.send(formatResult({
+                status: 404,
+                message: "Playlist not found"
+            }))
+        }
+
         await Playlist.findByIdAndRemove(req.params.id)
         return res.send(formatResult({
             status: 200,
-            message: "Playlist deleted"
+            message: "Playlist "+ playlistName+ " deleted"
         }))
     } catch (error) {
         return res.send(formatResult({
