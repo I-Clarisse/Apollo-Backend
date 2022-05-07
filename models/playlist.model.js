@@ -7,7 +7,8 @@ const playlistSchema = new mongoose.Schema({
   playlistName: {
     type: String,
     maxlength: 250,
-    default: "playlist1",
+    required: true
+    // default: "playlist1",
   },
   playlistSongs: [
     {
