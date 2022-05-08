@@ -19,14 +19,13 @@ const fileFilter = (req,file,cb)=>{
     }
 }
 
-const upload = multer(
-    {
-        storage: storage,
-        limits:{
-            fileSize: 1024*1024*5
-        },
-        fileFilter: fileFilter
-    })
+const upload = multer({
+    storage:storage,
+    limits:{
+    fileSize: 1024*1024*5
+    },
+    fileFilter:fileFilter
+});
 
 
 const {createPost, getAllPosts, getPost, addPost, updatePost, deletePost, likePost, unlikePost} = require("../controllers/post.controller")

@@ -2,48 +2,18 @@ const {formatResult} = require("../utils/formatter")
 const {Post, postValidation} = require("../models/post.model")
 const _ = require("lodash")
 
-
-// exports.createPost = async(req,res) =>{
-//     try {
-//         const {error} = postValidation(req.body)
-//         if(error) return res.status(400).send(error.message)
-
-//         // if(req.file == {} || req.file == null){
-//         //     return res.status(400).send("A post must have an image")
-//         // }
-
-//         let newPost = new Post(_.pick(req.body, ['photo', 'caption', 'location', 'postedBy']))
-//         console.log(newPost)
-//         newPost.photo = ((newPost.photo).replace("\\","/")).replace(" ","%20")
-
-//         try {
-//             await newPost.save()
-//             res.send(formatResult({
-//                 status: 201,
-//                 message: "Post created",
-//                 data: newPost
-//             }))
-//         } catch (ex) {
-//             return res.send(formatResult({
-//                 status: 400,
-//                 message: ex.message
-//             }))
-//         }
-//     } catch (error) {
-//         return res.send(formatResult({
-//             status: 400,
-//             message: error.message
-//         }))
-//     }
-// }
-
 exports.createPost = async(req, res) =>{
     console.log(req.file)
     try {
         const {error} = postValidation(req.body)
         if(error) return res.status(400).send(error.details)
-
-        let newPost = new Post(_.pick(req.body,['postImage', 'caption', 'location', 'postedBy']))
+        const newPost = new Post({
+            postImage: req.file.path,
+            caption : req.body.caption,
+            location : req.body.location,
+            postedBy : req.body.postedBy
+        })
+        // let newPost = new Post(_.pick(req.body,['postImage', 'caption', 'location', 'postedBy']))
         console.log(newPost)
         try{
             await newPost.save()
@@ -53,17 +23,19 @@ exports.createPost = async(req, res) =>{
                 data: newPost
             }))
         }catch (ex) {
-            return res.status(400).send(ex.details)   
+            return res.send(formatResult({
+                status: 400,
+                message: ex.message
+            }))
         }
-        
 }
     catch(err){
-        console.log(err)
-        return res.status(500).send(err.details)
+        return res.send(formatResult({
+            status: 400,
+            message: err.message
+        }))
     }
 }
-
-
 
 exports.getAllPosts = async(req, res) =>{
     const posts = await Post.find({})
