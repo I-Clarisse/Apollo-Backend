@@ -45,8 +45,8 @@ exports.postValidation = (post) =>{
     const schema = Joi.object({
         postImage: Joi.string(),
         caption: Joi.string(),
-        userId: Joi.string(),
-        location: Joi.string()
+        location: Joi.string(),
+        postedBy: Joi.string()
     })
     return schema.validate(post)
 }
