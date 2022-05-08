@@ -3,14 +3,13 @@ const router = express.Router()
 const multer = require('multer')
 
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, '../public/uploads');
+    destination: function(req,file,cb){
+        cb(null,'../public/uploads');
     },
-    filename: function(req, file, cb){
-        cb(null, new Date().toISOString() + file.originalname)
+    filename: function(req,file,cb){
+        cb(null,new Date().toISOString().replace(/:/g, '-') + file.originalname);
     }
-});
-
+})
 const fileFilter = (req,file,cb)=>{
     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
         cb(null,true);
@@ -18,7 +17,6 @@ const fileFilter = (req,file,cb)=>{
         cb(new Error('message'),false)
     }
 }
-
 const upload = multer({
     storage:storage,
     limits:{
@@ -26,7 +24,6 @@ const upload = multer({
     },
     fileFilter:fileFilter
 });
-
 
 const {createPost, getAllPosts, getPost, addPost, updatePost, deletePost, likePost, unlikePost} = require("../controllers/post.controller")
 
