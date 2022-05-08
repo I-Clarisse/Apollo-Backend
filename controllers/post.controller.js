@@ -13,7 +13,6 @@ exports.createPost = async(req, res) =>{
             location : req.body.location,
             postedBy : req.body.postedBy
         })
-        // let newPost = new Post(_.pick(req.body,['postImage', 'caption', 'location', 'postedBy']))
         console.log(newPost)
         try{
             await newPost.save()
