@@ -25,7 +25,7 @@ const upload = multer({
     fileFilter:fileFilter
 });
 
-const {createPost, getAllPosts, getPost, addPost, updatePost, deletePost, likePost, unlikePost} = require("../controllers/post.controller")
+const {createPost, getAllPosts, getPost, updatePost, deletePost, likePost, unlikePost} = require("../controllers/post.controller")
 
 // router.use('/:postId/comments', commentRoutes)
 router.get('/post/all', getAllPosts)
