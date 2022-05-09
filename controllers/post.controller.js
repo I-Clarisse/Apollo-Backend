@@ -37,67 +37,41 @@ exports.createPost = async(req, res) =>{
 }
 
 exports.getAllPosts = async(req, res) =>{
-    const posts = await Post.find({})
-    .populate('postedBy')
-    .populate({
-        path: 'comments',
-        populate: {
-            path: 'user',
-            model: 'User',
-        }
-    })
-    res.status(200).json({
-        success: true,
-        count: posts.length,
-        data: posts
-    })
+    try {
+        const posts = await Post.find()
+        return res.send(formatResult({
+            status: 200,
+            message: "Ok",
+            data: posts
+        }))
+    } catch (error) {
+        return res.send(formatResult({
+            status: 400,
+            message: error.message
+        }))
+    }
 }
 
 exports.getPost = async(req, res) => {
-    const post = await Post.findById(req.params.id).pop;
-    if(!post) {
-        res.status(404);
-        throw new Error('Post not Found')
+    try{
+        const post = await Post.findById(req.params.id)
+        if(!post){
+            return res.send(formatResult({
+                status: 404,
+                message: "Post not found"
+            }))
+        }
+        return res.send(formatResult({
+            status: 200,
+            message: "Ok",
+            data: post
+        }))
     }
-    res.status(201).json({success: true, data: post})
-}
-
-exports.addPost = async(req,res) => {
-    req.body.user = req.user.id;
-    let post = await Post.create(req.body);
-
-    if(req.files) {
-        if(!req.files.photo.mimetype.startsWith('image/')) {
-            res.status (401);
-            throw new Error('Please add image file');
-        }
-
-        if(req.files.photo.size > process.env.FILE_UPLOAD_LIMIT) {
-            res.status(401)
-            throw new Error(`Please add a photo less than ${process.env.FILE_UPLOAD_LIMIT}`);
-        }
-
-        const photoFile = req.files.photo;
-
-        photoFile.mv(`${process.env.FILE_UPLOAD_PATH}/${photoFile.name}`, async(err)=>{
-            if(err) {
-                res.status(401);
-                throw new Error(err.message)
-            }
-
-            post = await Post.findByIdAndUpdate(
-                post._id,
-                {photo: photoFile.name},
-                {
-                    new: true,
-                    runValidators: true
-                }
-            );
-            res.status(201).json({
-                success:true,
-                data: post
-            })
-        })
+    catch (error) {
+        return res.send(formatResult({
+            status: 404,
+            message: error.message
+        }))
     }
 }
 
@@ -130,28 +104,35 @@ exports.updatePost = async(req, res) =>{
 }
 
 exports.deletePost = async(req, res) =>{
-    let post = await Post.findById(req.params.id);
-
-    if(!post) {
-        res.send(formatResult({
-            status: 404,
-            message: "Post not found"
+    try {
+        let post = await Post.findById(req.params.id);
+    
+        if(!post) {
+            res.send(formatResult({
+                status: 404,
+                message: "Post not found"
+            }))
+        }
+    
+        // if(req.user.id.toString() !== post.user.toString() && req.user.role !== 'admin'){
+        //     res.send(formatResult({
+        //         status: 404,
+        //         message: "Not Authorized to delete this post"
+        //     }))
+        // }
+    
+        await Post.findByIdAndDelete(req.params.id)
+    
+        return res.send(formatResult({
+            status: 400,
+            message: "Post deleted successfully"
+        }))
+    } catch (error) {
+        return res.send(formatResult({
+            status: 400,
+            message: error.message
         }))
     }
-
-    if(req.user.id.toString() !== post.user.toString() && req.user.role !== 'admin'){
-        res.send(formatResult({
-            status: 404,
-            message: "Not Authorized to delete this post"
-        }))
-    }
-
-    post = await Post.findByIdAndDelete(req.params.id)
-
-    res.status(201).json({
-        success: true,
-        data: {}
-    })
 }
 
 exports.likePost = async(req, res) =>{

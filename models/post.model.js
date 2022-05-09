@@ -69,5 +69,12 @@ postSchema.virtual('users',{
     justOne: true
 })
 
+exports.validatePostEdit = (post) => {
+    const postEditSchema = Joi.object({
+        postImage: Joi.string(),
+        
+    })
+}
+
 const Post = mongoose.model('posts', postSchema);
 exports.Post = Post;
