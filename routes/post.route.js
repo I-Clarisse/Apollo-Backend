@@ -38,8 +38,8 @@ router.put('/post/edit/:id', updatePost)
 
 router.delete('/post/delete/:id', deletePost)
 
-router.route('/:id/likes').put(likePost)
+router.put('/:id/likes', likePost)
 
-router.route('/:id/unlike').put(unlikePost)
+router.put('/:id/unlike', unlikePost)
 
 module.exports = router

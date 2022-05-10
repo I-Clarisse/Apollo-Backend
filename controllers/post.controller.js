@@ -136,64 +136,78 @@ exports.deletePost = async(req, res) =>{
 }
 
 exports.likePost = async(req, res) =>{
-    let post  = await Post.findById(req.params.id)
-
-    if(!post){
-        res.send(formatResult({
-            status:404,
-            message: "Post Not Found"
-        }))
-    }
-
-    if(post.likes.includes(req.user.id)){
-        res.send(formatResult({
-            status: 401,
-            message: "Already likes post"
-        }))
-    }
-
-    post = await Post.findByIdAndUpdate(
-        req.params.id,
-        {
-            $push:{
-                likes: req.user.id
-            }
-        },
-        {
-            new: true,
-            runValidators: true
+    try {
+        let post  = await Post.findById(req.params.id)
+    
+        if(!post){
+            res.send(formatResult({
+                status:404,
+                message: "Post Not Found"
+            }))
         }
-    )
-    res.status(201).json({
-        success: true,
-        data: post
-    })
+    
+        if(post.likes.includes(req.user.id)){
+            res.send(formatResult({
+                status: 401,
+                message: "Already likes post"
+            }))
+        }
+    
+        post = await Post.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push:{
+                    likes: req.user.id
+                }
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        )
+        res.status(201).json({
+            success: true,
+            data: post
+        })
+    } catch (error) {
+        return res.send(formatResult({
+            status: 400,
+            message: error.message
+        }))
+    }
 }
 
 exports.unlikePost = async(req, res) =>{
-    let post = await Post.findById(req.params.id);
-
-    if(!post){
-        res.send(formatResult({
-            status:404,
-            message: "Post not found"
+    try {
+        let post = await Post.findById(req.params.id);
+    
+        if(!post){
+            res.send(formatResult({
+                status:404,
+                message: "Post not found"
+            }))
+        }
+    
+        post = await Post.findByIdAndUpdate(
+            req.params.id,
+            {
+                $pull:{
+                    likes: req.user.id
+                }
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        )
+        res.status(201).json({
+            success: true,
+            data: post
+        })
+    } catch (error) {
+        return res.send(formatResult({
+            status: 400,
+            message: error.message
         }))
     }
-
-    post = await Post.findByIdAndUpdate(
-        req.params.id,
-        {
-            $pull:{
-                likes: req.user.id
-            }
-        },
-        {
-            new: true,
-            runValidators: true
-        }
-    )
-    res.status(201).json({
-        success: true,
-        data: post
-    })
 }
