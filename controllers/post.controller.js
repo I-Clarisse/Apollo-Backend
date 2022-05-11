@@ -137,38 +137,46 @@ exports.deletePost = async(req, res) =>{
 
 exports.likePost = async(req, res) =>{
     try {
+        const id = req.params.id;
+        console.log(id)
+
         let post  = await Post.findById(req.params.id)
-    
+
+        console.log(post)
+
         if(!post){
             res.send(formatResult({
                 status:404,
                 message: "Post Not Found"
             }))
         }
+        else
     
-        if(post.likes.includes(req.user.id)){
+        if(post.likes.includes(req.body.userId)){
             res.send(formatResult({
                 status: 401,
                 message: "Already likes post"
             }))
         }
     
-        post = await Post.findByIdAndUpdate(
-            req.params.id,
-            {
-                $push:{
-                    likes: req.user.id
+        else{
+            post = await Post.findByIdAndUpdate(
+                req.params.id,
+                {
+                    $push:{
+                        likes: req.body.userId
+                    }
+                },
+                {
+                    new: true,
+                    runValidators: true
                 }
-            },
-            {
-                new: true,
-                runValidators: true
-            }
-        )
-        res.status(201).json({
-            success: true,
-            data: post
-        })
+            )
+            res.status(201).json({
+                success: true,
+                message: "You liked post"
+            })
+        }
     } catch (error) {
         return res.send(formatResult({
             status: 400,
@@ -176,6 +184,20 @@ exports.likePost = async(req, res) =>{
         }))
     }
 }
+
+// exports.likePost = async(req, res)=>{
+//    Post.findByIdAndUpdate(req.body.postId,{
+//     $push:{likes:req.user._id}
+// },{
+//     new:true
+// }).exec((err,result)=>{
+//     if(err){
+//         return res.status(422).json({error:err})
+//     }else{
+//         res.json(result)
+//     }
+// })
+// }
 
 exports.unlikePost = async(req, res) =>{
     try {
