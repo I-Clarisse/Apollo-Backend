@@ -199,22 +199,35 @@ exports.likePost = async(req, res) =>{
 // })
 // }
 
-exports.unlikePost = async(req, res) =>{
-    try {
-        let post = await Post.findById(req.params.id);
-    
-        if(!post){
-            res.send(formatResult({
-                status:404,
-                message: "Post not found"
-            }))
-        }
-    
+exports.unlikePost = async(req, res) =>{ try {
+    const id = req.params.id;
+    console.log(id)
+
+    let post  = await Post.findById(req.params.id)
+
+    console.log(post)
+
+    if(!post){
+        res.send(formatResult({
+            status:404,
+            message: "Post Not Found"
+        }))
+    }
+    else
+
+    if(!(post.likes.includes(req.body.userId))){
+        res.send(formatResult({
+            status: 401,
+            message: "You do not like this post"
+        }))
+    }
+
+    else{
         post = await Post.findByIdAndUpdate(
             req.params.id,
             {
                 $pull:{
-                    likes: req.user.id
+                    likes: req.body.userId
                 }
             },
             {
@@ -224,12 +237,13 @@ exports.unlikePost = async(req, res) =>{
         )
         res.status(201).json({
             success: true,
-            data: post
+            message: "You unliked post"
         })
-    } catch (error) {
-        return res.send(formatResult({
-            status: 400,
-            message: error.message
-        }))
     }
+} catch (error) {
+    return res.send(formatResult({
+        status: 400,
+        message: error.message
+    }))
+}
 }
