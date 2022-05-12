@@ -42,4 +42,5 @@ router.put('/:id/likes', likePost)
 
 router.put('/:id/unlike', unlikePost)
 
+router.post('/:id/comment', addComment)
 module.exports = router

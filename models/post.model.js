@@ -72,7 +72,7 @@ postSchema.virtual('users',{
     ref: 'users',
     localField: 'postedBy',
     foreignField: '_id',
-    justOne: true
+    // justOne: true
 })
 
 exports.validatePostEdit = (post) => {
