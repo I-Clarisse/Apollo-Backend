@@ -247,6 +247,3 @@ exports.unlikePost = async(req, res) =>{ try {
     }))
 }
 }
-exports.addComment = async(req, res) =>{
-    return;
-}
