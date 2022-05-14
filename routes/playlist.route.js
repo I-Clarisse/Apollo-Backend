@@ -3,7 +3,51 @@ const router = express.Router();
 
 const {createPlaylist, getAllPlaylists, getUserPlaylist, deletePlaylist, addSongs, editPlaylist} = require("../controllers/playlist.controller")
 
+/**
+ * @swagger
+ *  /playlist/new:
+ *    post:
+ *      tags: [PLAYLIST OPERATIONS]
+ *      description: Get a playlist
+ *      summary: Get user's playlist
+ *      parameters:
+ *         - playlistName
+ *           type: string
+ *      responses:
+ *       200: 
+ *         description: success
+ *       401:
+ *         description: unauthorized
+ *       404:
+ *         description: not found
+ *       500:
+ *          description: Server Error
+ * 
+ */
+
 router.post('/playlist/new', createPlaylist)
+
+/**
+ * @swagger
+ *  /playlist/:id:
+ *    get:
+ *      tags: [PLAYLIST OPERATIONS]
+ *      description: Get a playlist
+ *      summary: Get user's playlist
+ *      parameters:
+ *         - playlistName
+ *           type: string
+ *      responses:
+ *       200: 
+ *         description: success
+ *       401:
+ *         description: unauthorized
+ *       404:
+ *         description: not found
+ *       500:
+ *          description: Server Error
+ * 
+ */
 
 router.get('/playlist/all', getAllPlaylists)
 
