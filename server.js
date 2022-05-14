@@ -10,22 +10,43 @@ const dbErrors = debug('app:errors')
 const error = debug('error')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
-// const req = require('express/lib/request')
-// const swaggerUi = require('swagger-ui-express')
+const req = require('express/lib/request')
+const swaggerUI = require('swagger-ui-express')
 // const swagerDocument = require('swagger.json')
+const swaggerJsDoc = require('swagger-jsdoc')
 dotenv.config({path: './.env'});
 
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Apollo-Backend API",
+            version: "1.0.0",
+            description: "apis to Apollo music streaming app"
+        },
+        servers: [
+            {
+                url: "http://localhost:8000"
+            }
+        ]
+    },
+    apis: [".routes/*.js"]
+}
+
+const specs = swaggerJsDoc(options)
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
 //calling the bodyParsing middleware
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 app.use(morgan('dev'))
 // app.use(express.static())
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
 //calling the routes
 app.use(require('./routes/playlist.route'))
 app.use(require('./routes/post.route'))
-// app.use(require('./routes/user.route'))
+
 //connecting to the database
 // let password = config.get("DATABASE_PASSWORD")
 mongoose.connect(process.env.MONGO_URL)
