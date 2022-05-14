@@ -3,10 +3,6 @@ const {Song} = require('../models/song.model')
 const { formatResult } = require('../utils/formatter')
 const _ = require("lodash")
 
-/**
- * @swagger
- * 
- */
 
 //create new playlist
 exports.createPlaylist = async(req, res) =>{
