@@ -3,6 +3,23 @@ const Joi = require("joi");
 // import idValidator from 'mongoose-id-validator';
 // const idValidator = require('idValidator')
 
+/**
+ * @swagger
+ * componets: 
+ * schemas:
+ * Playlist:
+ * type: object,
+ * required:
+ * playlistName
+ * properties:
+ * id: 
+ * type: string
+ * description: The auto-generated id of a playlist
+ * playlistName:
+ * type: string
+ * description: The name of the playlist
+ */
+
 const playlistSchema = new mongoose.Schema({
   playlistName: {
     type: String,
