@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-// import idValidator from 'mongoose-id-validator';
-// const idValidator = require('idValidator')
 
 /**
  * @swagger
